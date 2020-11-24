@@ -1,0 +1,14 @@
+{
+  "name": "Crazy Web Man",
+  "version": "0.1",
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_start",
+      "js": ["man.js"]
+    }
+  ],
+
+  "manifest_version": 2
+}

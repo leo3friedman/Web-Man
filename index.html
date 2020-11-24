@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <title>Crazy Web Man</title>
+    <style>
+      body {
+        background-color: cornflowerblue;
+        overflow: hidden;
+        margin: none;
+      }
+      #man {
+        width: 25px;
+        height: 87.5px;
+        background-color: black;
+        position: absolute;
+        z-index: 999;
+      }
+      #buildingRed {
+        width: 100px;
+        height: 200px;
+        background-color: red;
+        display: inline-block;
+      }
+      #buildingWhite {
+        width: 100px;
+        height: 100px;
+        background-color: white;
+        display: inline-block;
+      }
+      #buildingYellow {
+        width: 100px;
+        height: 50px;
+        background-color: yellow;
+        display: inline-block;
+      }
+      #buildings {
+        position: absolute;
+        padding: 10px;
+        /* display: flex; */
+        bottom: 0;
+      }
+      .page {
+        margin: 200px auto;
+        width: 400px;
+      }
+      #platform {
+        position: absolute;
+        border-top: 10px solid rgba(0, 255, 0, 0.3);
+        /* height: 10px; */
+      }
+      h1,
+      h2,
+      p {
+        display: inline;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="page">
+        <!-- <img
+          src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"
+        /> -->
+        <h1>
+          Welcome to the party page
+        </h1>
+        <br />
+        <h2>Stay as long as you like</h2>
+        <br />
+        <p>we like to party</p>
+      </div>
+      <div id="buildings">
+        <div id="buildingRed"></div>
+        <div id="buildingWhite"></div>
+        <div id="buildingYellow"></div>
+      </div>
+    </main>
+    <div id="man"></div>
+    <div id="platform"></div>
+    <script src="man.js"></script>
+  </body>
+</html>
