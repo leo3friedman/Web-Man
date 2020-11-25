@@ -1,11 +1,11 @@
 {
   "name": "Crazy Web Man",
   "version": "0.1",
-  "permissions": ["activeTab"],
+  "permissions": ["tabs", "<all_urls>"],
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "run_at": "document_start",
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_idle",
       "js": ["man.js"]
     }
   ],

@@ -1,0 +1,10 @@
+TODO
+find pages where landing isn't working right
+
+
+DONE
+fall when scroll down
+scrolls up when jump over visible screen
+only auto-scroll when jumping
+not landable if man is off the page
+wrong landing platform after scroll
