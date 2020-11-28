@@ -7,33 +7,72 @@
       #appleImage {
         height: 400px;
         width: 811px;
+        display: none;
       }
       #canvas {
         border: 2px solid red;
         display: block;
       }
+      #previous,
+      #current {
+        width: 50px;
+        height: 50px;
+        border: 2px solid black;
+        margin-right: 16px;
+      }
     </style>
   </head>
   <body>
     <img id="appleImage" src="IMGs/WebManTestCapture.PNG" />
+    <div id="previous"></div>
+    <div id="current"></div>
+    <h1>contrast: <span id="contrast"></span></h1>
     <canvas id="canvas"></canvas>
     <script>
+      const contrast = document.getElementById("contrast");
       const appleImage = document.getElementById("appleImage");
       const canvas = document.getElementById("canvas");
+      const previous = document.getElementById("previous");
+      const current = document.getElementById("current");
+      let prevRgb = [255, 255, 255];
+      let context = canvas.getContext("2d");
       appleImage.addEventListener("load", () => {
         canvas.width = appleImage.width;
         canvas.height = appleImage.height;
-        canvas.getContext("2d").drawImage(appleImage, 0, 0);
+        context.drawImage(appleImage, 0, 0);
         // .drawImage(appleImage, 0, 0, canvas.width, canvas.height);
       });
+
+      function poop(colorValue) {
+        const colorRatio = colorValue / 255;
+        if (colorRatio <= 0.03928) {
+          return colorRatio / 12.92;
+        } else {
+          return Math.pow((colorRatio + 0.55) / 1.055, 2.4);
+        }
+      }
+      function luminance(rgb) {
+        return (
+          poop(rgb[0]) * 0.2126 + poop(rgb[1]) * 0.7152 + poop(rgb[2]) * 0.0722
+        );
+      }
       canvas.addEventListener("mousemove", (event) => {
         // console.log(event);
         const x = event.layerX;
         const y = event.layerY;
-        const data = canvas.getContext("2d").getImageData(x, y, 1, 1).data;
-        let background = `rgb(${data[0]},${data[1]},${data[2]})`;
-        console.log(background);
-        document.body.style.background = background;
+        const data = context.getImageData(x, y, 1, 1).data;
+        let rgbString = (rgb) => `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
+        console.log(rgbString(data));
+        previous.style.background = rgbString(prevRgb);
+        current.style.background = rgbString(data);
+        const currentLuminance = luminance(data);
+        const previousLuminance = luminance(prevRgb);
+        const c =
+          currentLuminance > previousLuminance
+            ? (previousLuminance + 0.05) / (currentLuminance + 0.05)
+            : (currentLuminance + 0.05) / (previousLuminance + 0.05);
+        contrast.innerText = c;
+        prevRgb = data;
       });
     </script>
   </body>
