@@ -29,7 +29,33 @@
     <h1>contrast: <span id="contrast"></span></h1>
     <canvas id="canvas"></canvas>
     <script>
-      const contrast = document.getElementById("contrast");
+      function toStandardRgb(rgb) {
+        return rgb.map((colorChannel) => colorChannel / 255);
+      }
+      function toLinearRgb(standardRgb) {
+        return standardRgb.map((colorChannel) =>
+          colorChannel <= 0.03928
+            ? colorChannel / 12.92
+            : Math.pow((colorChannel + 0.55) / 1.055, 2.4)
+        );
+      }
+      function sum(arr) {
+        return arr.reduce(
+          (accumulator, currentValue) => accumulator + currentValue,
+          0
+        );
+      }
+      function luminance(rgb) {
+        const [red, green, blue] = toLinearRgb(toStandardRgb(rgb));
+        return sum([red * 0.2126, green * 0.7152, blue * 0.0722]);
+      }
+      const contrast = (lum1, lum2) =>
+        lum1 > lum2
+          ? (lum2 + 0.05) / (lum1 + 0.05)
+          : (lum1 + 0.05) / (lum2 + 0.05);
+    </script>
+    <script>
+      const contrastElement = document.getElementById("contrast");
       const appleImage = document.getElementById("appleImage");
       const canvas = document.getElementById("canvas");
       const previous = document.getElementById("previous");
@@ -43,19 +69,6 @@
         // .drawImage(appleImage, 0, 0, canvas.width, canvas.height);
       });
 
-      function poop(colorValue) {
-        const colorRatio = colorValue / 255;
-        if (colorRatio <= 0.03928) {
-          return colorRatio / 12.92;
-        } else {
-          return Math.pow((colorRatio + 0.55) / 1.055, 2.4);
-        }
-      }
-      function luminance(rgb) {
-        return (
-          poop(rgb[0]) * 0.2126 + poop(rgb[1]) * 0.7152 + poop(rgb[2]) * 0.0722
-        );
-      }
       canvas.addEventListener("mousemove", (event) => {
         // console.log(event);
         const x = event.layerX;
@@ -67,11 +80,10 @@
         current.style.background = rgbString(data);
         const currentLuminance = luminance(data);
         const previousLuminance = luminance(prevRgb);
-        const c =
-          currentLuminance > previousLuminance
-            ? (previousLuminance + 0.05) / (currentLuminance + 0.05)
-            : (currentLuminance + 0.05) / (previousLuminance + 0.05);
-        contrast.innerText = c;
+        contrastElement.innerText = contrast(
+          currentLuminance,
+          previousLuminance
+        );
         prevRgb = data;
       });
     </script>
