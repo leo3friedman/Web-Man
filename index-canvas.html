@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Crazy Web Man</title>
+    <style>
+      #appleImage {
+        height: 400px;
+        width: 811px;
+      }
+      #canvas {
+        border: 2px solid red;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <img id="appleImage" src="IMGs/WebManTestCapture.PNG" />
+    <canvas id="canvas"></canvas>
+    <script>
+      const appleImage = document.getElementById("appleImage");
+      const canvas = document.getElementById("canvas");
+      appleImage.addEventListener("load", () => {
+        canvas.width = appleImage.width;
+        canvas.height = appleImage.height;
+        canvas.getContext("2d").drawImage(appleImage, 0, 0);
+        // .drawImage(appleImage, 0, 0, canvas.width, canvas.height);
+      });
+      canvas.addEventListener("mousemove", (event) => {
+        // console.log(event);
+        const x = event.layerX;
+        const y = event.layerY;
+        const data = canvas.getContext("2d").getImageData(x, y, 1, 1).data;
+        let background = `rgb(${data[0]},${data[1]},${data[2]})`;
+        console.log(background);
+        document.body.style.background = background;
+      });
+    </script>
+  </body>
+</html>

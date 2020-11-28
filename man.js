@@ -8,7 +8,7 @@ man.style.position = "absolute";
 man.style.zIndex = "999";
 platform.id = "platform";
 platform.style.cssText =
-  "position: absolute; border-top: 10px solid rgba(0, 255, 0, 0.3); z-index:998";
+  "position: absolute; border-radius:6px; border: 6px solid rgba(72, 207, 82, 0.3); z-index:998";
 document.body.appendChild(man);
 document.body.appendChild(platform);
 man = document.getElementById("man");
@@ -26,7 +26,6 @@ let loc = {
   x: pageWidth / 2,
   y: pageBottom - manHeight,
 };
-console.log(loc);
 let elementDims;
 function getElementDims() {
   elementDims = Array.from(document.querySelectorAll("body *")).map(
@@ -47,7 +46,6 @@ function getElementDims() {
   );
 }
 getElementDims();
-console.log(elementDims);
 function isOver(loc, dim) {
   if (
     loc.y <= dim.top - manHeight &&
@@ -62,11 +60,12 @@ function isOver(loc, dim) {
   }
 }
 function isLandable(element) {
-  let el = getComputedStyle(element);
-  let parent = getComputedStyle(element.parentElement);
+  let style = getComputedStyle(element);
+  let parentStyle = getComputedStyle(element.parentElement);
   if (
-    el.nodeName === "IMG" ||
-    el.backgroundColor !== parent.backgroundColor ||
+    style.nodeName === "IMG" ||
+    (style.backgroundColor !== "rgba(0, 0, 0, 0)" &&
+      style.backgroundColor !== parentStyle.backgroundColor) ||
     Array.from(element.childNodes).some(
       (child) => child.nodeType === 3 && /\S+/.test(child.textContent)
     )
@@ -96,17 +95,17 @@ function moveLeft() {
 }
 function moveDown() {
   if (loc.y < pageBottom - manHeight) {
-    loc.y = loc.y + 0.001;
+    loc.y = loc.y + 0.0000000001;
   }
 }
 window.addEventListener("keydown", function (event) {
   keys[event.key] = true;
-  console.log(loc);
 });
 window.addEventListener("keyup", function (event) {
   keys[event.key] = false;
 });
 function update() {
+  // getElementDims()
   pageBottom = window.innerHeight + window.scrollY;
   pageWidth = document.body.clientWidth;
   if (loc.y < window.scrollY && vel > 0) {
@@ -139,21 +138,21 @@ function update() {
     pos = loc.y;
     if (landingPlatform) {
       platform.style.display = "block";
-      platform.style.top = landingPlatform.dim.top + "px";
+      platform.style.top = landingPlatform.dim.top - 6 + "px";
       platform.style.width = landingPlatform.dim.width + "px";
-      platform.style.left = landingPlatform.dim.left + "px";
-    } else {
-      platform.style.display = "none";
+      platform.style.left = landingPlatform.dim.left - 6 + "px";
+      platform.style.height = landingPlatform.dim.height + "px";
     }
+  } else {
+    platform.style.display = "none";
+    // elementDims.forEach((elementAndDim)=>{
+    //   elementAndDim.element.style.outline = null
+    // })
   }
 
   if (keys.ArrowDown || keys.s) moveDown();
   if (keys.ArrowUp || keys.w) {
     moveUp();
-    console.log(loc.y == fallHeight);
-    console.log(vel);
-    console.log(fallHeight);
-    console.log(loc.y);
   }
   if (keys.ArrowRight || keys.d) moveRight();
   if (keys.ArrowLeft || keys.a) moveLeft();

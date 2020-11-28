@@ -1,6 +1,19 @@
 TODO
 find pages where landing isn't working right
+handle transparent parent (detect opacity)
+switch collision detection from elements to pixels
+- take screenshot
+- draw on canvas
+- collect canvas data
+- use data for collision detection
+better way to see possible landing platforms
 
+VISION
+bump into things next to you
+ghost mode to be able to pass through things next to you
+take a logo off the page and use it
+logos come alive and interact with you
+use tools on logo (google search birdcage, back to twitter, catch bird in cage)
 
 DONE
 fall when scroll down
@@ -8,3 +21,5 @@ scrolls up when jump over visible screen
 only auto-scroll when jumping
 not landable if man is off the page
 wrong landing platform after scroll
+**fix scrolling while on a platform
+change color of outline
