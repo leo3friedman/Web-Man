@@ -1,82 +1,59 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
     <title>Crazy Web Man</title>
     <style>
       body {
-        background-color: cornflowerblue;
-        /* overflow: hidden; */
-        height: 1400px;
-        margin: none;
+        padding: 0;
+        margin: 0;
       }
-      #man {
-        width: 25px;
-        height: 87.5px;
-        background-color: black;
+      #appleImage {
         position: absolute;
-        z-index: 999;
+        /*height: 400px;*/
+        /*width: 811px;*/
+        /*display: none;*/
+        opacity: 0.1;
       }
-      #buildingRed {
-        width: 100px;
-        height: 200px;
-        background-color: red;
-        display: inline-block;
+      canvas {
+        /*border: 2px solid red;*/
+        display: block;
+        position: absolute;
       }
-      #buildingWhite {
-        width: 100px;
-        height: 100px;
-        background-color: white;
-        display: inline-block;
-      }
-      #buildingYellow {
-        width: 100px;
+      #previous,
+      #current {
+        width: 50px;
         height: 50px;
-        background-color: #ffff00;
-        display: inline-block;
+        border: 2px solid #000000;
+        margin-right: 16px;
       }
-      #buildings {
+      #canvases {
+        position: relative;
+        margin: 0;
+        padding: 0;
+      }
+      #canvas {
+        opacity: 0.1;
+      }
+      #info {
         position: absolute;
-        padding: 10px;
-        /* display: flex; */
-        bottom: 0;
-      }
-      .page {
-        margin: 200px auto;
-        width: 400px;
-      }
-      #platform {
-        position: absolute;
-        border-top: 10px solid rgba(0, 255, 0, 0.3);
-        /* height: 10px; */
-      }
-      h1,
-      h2,
-      p {
-        display: inline;
       }
     </style>
   </head>
   <body>
-    <main>
-      <div class="page">
-        <!-- <img
-          src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"
-        /> -->
-        <h1>
-          Welcome to the party page
-        </h1>
-        <br />
-        <h2>Stay as long as you like</h2>
-        <br />
-        <p>we like to party</p>
-      </div>
-      <div id="buildings">
-        <div id="buildingRed"></div>
-        <div id="buildingWhite"></div>
-        <div id="buildingYellow"></div>
-      </div>
-    </main>
-    <!-- <div id="man"></div>
-    <div id="platform"></div> -->
-    <script src="man.js"></script>
+    <img id="appleImage" src="IMGs/Group 5.PNG" />
+    <!--    <div id="previous"></div>-->
+    <!--    <div id="current"></div>-->
+    <!--    <h1>contrast: <span id="contrast"></span></h1>-->
+    <div id="canvases">
+      <canvas id="canvas"></canvas>
+      <canvas id="overlay"></canvas>
+    </div>
+    <div id="info">
+      <h1>Man Bottom:<span id="man-bottom-label">?</span></h1>
+      <h1>Bottom Index:<span id="bottom-index">?</span></h1>
+      <h1>Red Below:<span id="red-below">?</span></h1>
+    </div>
+    <script src="manContrast.js"></script>
   </body>
 </html>
